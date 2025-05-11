@@ -59,7 +59,7 @@ export default function LessonPage() {
           <div className="text-center">
             <h1 className="text-2xl font-bold">Lesson not found</h1>
             <p className="mt-4 text-muted-foreground">
-              The lesson you're looking for doesn't exist or has been removed.
+              The lesson you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
             <Button className="mt-6" asChild>
               <Link href="/courses">Back to Courses</Link>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, CircleIcon, ChevronDown, ChevronUp, PlayCircle } from 'lucide-react';
-import { Lesson, Course } from '@/lib/types';
+import { Course } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useStore } from '@/lib/store';
 import { cn } from '@/lib/utils';

@@ -11,7 +11,20 @@ interface VideoPlayerProps {
 }
 
 export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
-  // If it's a YouTube embed URL, return an iframe
+  // Hooks must be called unconditionally
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const controlsTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // If it's a YouTube embed URL, render the iframe
   if (videoUrl.includes('youtube.com/embed')) {
     return (
       <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black">
@@ -26,40 +39,27 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     );
   }
 
-  // For direct video URLs, implement a custom video player
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showControls, setShowControls] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const playerRef = useRef<HTMLDivElement>(null);
-
-  const controlsTimeout = useRef<NodeJS.Timeout | null>(null);
-
   useEffect(() => {
     const videoElement = videoRef.current;
-    
+
     if (!videoElement) return;
-    
+
     const handleTimeUpdate = () => {
       setCurrentTime(videoElement.currentTime);
     };
-    
+
     const handleLoadedMetadata = () => {
       setDuration(videoElement.duration);
     };
-    
+
     const handleEnded = () => {
       setIsPlaying(false);
     };
-    
+
     videoElement.addEventListener('timeupdate', handleTimeUpdate);
     videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
     videoElement.addEventListener('ended', handleEnded);
-    
+
     return () => {
       videoElement.removeEventListener('timeupdate', handleTimeUpdate);
       videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
@@ -70,9 +70,9 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    
+
     if (isPlaying) {
-      video.play().catch(e => console.error('Error playing video:', e));
+      video.play().catch((e) => console.error('Error playing video:', e));
     } else {
       video.pause();
     }
@@ -81,7 +81,7 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    
+
     video.volume = isMuted ? 0 : volume;
   }, [volume, isMuted]);
 
@@ -89,9 +89,9 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
-    
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    
+
     return () => {
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
@@ -101,9 +101,9 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     if (controlsTimeout.current) {
       clearTimeout(controlsTimeout.current);
     }
-    
+
     setShowControls(true);
-    
+
     controlsTimeout.current = setTimeout(() => {
       if (isPlaying) {
         setShowControls(false);
@@ -124,7 +124,7 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   const handleSeek = (value: number[]) => {
     const video = videoRef.current;
     if (!video) return;
-    
+
     video.currentTime = value[0];
     setCurrentTime(value[0]);
     handleControlsTimeout();
@@ -139,7 +139,7 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   const toggleFullscreen = () => {
     const player = playerRef.current;
     if (!player) return;
-    
+
     if (!isFullscreen) {
       if (player.requestFullscreen) {
         player.requestFullscreen();
@@ -149,7 +149,7 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
         document.exitFullscreen();
       }
     }
-    
+
     handleControlsTimeout();
   };
 
@@ -160,7 +160,7 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   };
 
   return (
-    <div 
+    <div
       ref={playerRef}
       className="relative w-full aspect-video bg-black rounded-lg overflow-hidden group"
       onMouseMove={handleControlsTimeout}
@@ -177,18 +177,15 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
         onClick={togglePlay}
         playsInline
       />
-      
+
       {/* Video overlay for play/pause on click */}
-      <div 
-        className="absolute inset-0 cursor-pointer" 
-        onClick={togglePlay}
-      />
-      
+      <div className="absolute inset-0 cursor-pointer" onClick={togglePlay} />
+
       {/* Controls */}
-      <div 
+      <div
         className={cn(
-          "absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity duration-300",
-          (showControls || !isPlaying) ? "opacity-100" : "opacity-0"
+          'absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity duration-300',
+          showControls || !isPlaying ? 'opacity-100' : 'opacity-0'
         )}
       >
         {/* Progress bar */}
@@ -202,34 +199,34 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
             className="cursor-pointer"
           />
         </div>
-        
+
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               className="text-white hover:bg-white/20 h-8 w-8"
               onClick={togglePlay}
             >
               {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
             </Button>
-            
+
             <div className="text-xs text-white">
               {formatTime(currentTime)} / {formatTime(duration || 0)}
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <div className="relative flex items-center group">
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="text-white hover:bg-white/20 h-8 w-8"
                 onClick={toggleMute}
               >
                 {isMuted || volume === 0 ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
               </Button>
-              
+
               <div className="w-0 overflow-hidden transition-all duration-200 group-hover:w-24 opacity-0 group-hover:opacity-100">
                 <Slider
                   value={[isMuted ? 0 : volume]}
@@ -241,10 +238,10 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
                 />
               </div>
             </div>
-            
-            <Button 
-              variant="ghost" 
-              size="icon" 
+
+            <Button
+              variant="ghost"
+              size="icon"
               className="text-white hover:bg-white/20 h-8 w-8"
               onClick={toggleFullscreen}
             >
@@ -253,13 +250,13 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
           </div>
         </div>
       </div>
-      
+
       {/* Big play button in center when paused */}
       {!isPlaying && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="text-white bg-black/50 hover:bg-black/70 h-16 w-16 rounded-full"
             onClick={togglePlay}
           >

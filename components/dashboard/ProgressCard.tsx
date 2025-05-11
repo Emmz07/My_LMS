@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { PlayCircle } from 'lucide-react';
+import Image from 'next/image';
 
 interface ProgressCardProps {
   course: Course;
@@ -15,7 +16,7 @@ export function ProgressCard({ course, progress, lastLessonId }: ProgressCardPro
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-md transition-shadow">
       <div className="relative aspect-video">
-        <img 
+        <Image 
           src={course.thumbnail} 
           alt={course.title}
           className="object-cover w-full h-full"
@@ -25,7 +26,7 @@ export function ProgressCard({ course, progress, lastLessonId }: ProgressCardPro
             {course.title}
           </h3>
           <div className="flex items-center space-x-2">
-            <img 
+            <Image 
               src={course.author.avatar} 
               alt={course.author.name}
               className="w-6 h-6 rounded-full"

@@ -14,7 +14,7 @@ interface NoteEditorProps {
 }
 
 export function NoteEditor({ courseId, lessonId }: NoteEditorProps) {
-  const { notes, addNote, updateNote, deleteNote, getLessonNotes } = useStore();
+  const { addNote, updateNote, deleteNote, getLessonNotes } = useStore();
   const [newNoteContent, setNewNoteContent] = useState('');
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');

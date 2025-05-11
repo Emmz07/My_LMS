@@ -4,6 +4,7 @@ import { Course } from '@/lib/types';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { categories } from '@/data/categories';
+import Image from 'next/image';
 
 interface CourseCardProps {
   course: Course;
@@ -19,7 +20,10 @@ export function CourseCard({ course }: CourseCardProps) {
     <Link href={`/courses/${course.id}`} className="block group">
       <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-md flex flex-col">
         <div className="relative aspect-video overflow-hidden">
-          <img 
+          <Image 
+            width={1260} // Add width
+            height={750} // Add height
+            layout="responsive"
             src={course.thumbnail} 
             alt={course.title}
             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
@@ -59,7 +63,10 @@ export function CourseCard({ course }: CourseCardProps) {
         </CardContent>
         <CardFooter className="px-4 py-3 border-t flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <img 
+            <Image 
+              width={1260} // Add width
+              height={750} // Add height
+              layout="responsive"
               src={course.author.avatar} 
               alt={course.author.name}
               className="w-6 h-6 rounded-full"

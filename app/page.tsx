@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { CourseGrid } from '@/components/courses/CourseGrid';
@@ -86,10 +87,13 @@ export default function Home() {
               className="hidden md:block relative"
               variants={liquidEffect}
             >
-              <img
+              <Image
                 src="https://images.pexels.com/photos/4492126/pexels-photo-4492126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="Online learning"
                 className="rounded-xl shadow-xl w-full"
+                layout="responsive"
+                width={1260}
+                height={750}
               />
               <div className="absolute -bottom-8 -left-8 bg-card rounded-lg shadow-lg p-4 flex items-center space-x-3">
                 <div className="bg-green-500/10 rounded-full p-2">
@@ -300,10 +304,13 @@ export default function Home() {
               className="relative hidden md:block"
               variants={liquidEffect}
             >
-              <img
+              <Image
                 src="https://images.pexels.com/photos/4145153/pexels-photo-4145153.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="Students learning"
                 className="rounded-lg shadow-xl"
+                layout="responsive"
+                width={1260}
+                height={750}
               />
             </motion.div>
           </div>

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Course, EnrolledCourse, Lesson, User, UserNote } from './types';
+import { EnrolledCourse, User, UserNote } from './types';
 import { courses } from '@/data/courses';
 
 type AuthState = {
@@ -62,7 +62,7 @@ export const useStore = create<StoreState>()(
       // Auth state
       isAuthenticated: true, // Pre-authenticated for demo
       user: mockUser,
-      login: (email, password) => {
+      login: (_email, _password) => {
         set({ isAuthenticated: true, user: mockUser });
       },
       logout: () => {
