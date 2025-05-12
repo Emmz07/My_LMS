@@ -64,8 +64,8 @@ export function CourseCard({ course }: CourseCardProps) {
         <CardFooter className="px-4 py-3 border-t flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Image 
-              width={1260} // Add width
-              height={750} // Add height
+              width={48} // Add width
+              height={48} // Add height
               layout="responsive"
               src={course.author.avatar} 
               alt={course.author.name}

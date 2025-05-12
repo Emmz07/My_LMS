@@ -62,7 +62,7 @@ export const useStore = create<StoreState>()(
       // Auth state
       isAuthenticated: true, // Pre-authenticated for demo
       user: mockUser,
-      login: (_email, _password) => {
+      login: () => {
         set({ isAuthenticated: true, user: mockUser });
       },
       logout: () => {

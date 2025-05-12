@@ -17,6 +17,8 @@ export function ProgressCard({ course, progress, lastLessonId }: ProgressCardPro
     <Card className="overflow-hidden flex flex-col hover:shadow-md transition-shadow">
       <div className="relative aspect-video">
         <Image 
+        width={1280} // Accurate width for the thumbnail
+        height={720} 
           src={course.thumbnail} 
           alt={course.title}
           className="object-cover w-full h-full"
@@ -27,6 +29,8 @@ export function ProgressCard({ course, progress, lastLessonId }: ProgressCardPro
           </h3>
           <div className="flex items-center space-x-2">
             <Image 
+            width={1280} // Accurate width for the thumbnail
+            height={720} 
               src={course.author.avatar} 
               alt={course.author.name}
               className="w-6 h-6 rounded-full"

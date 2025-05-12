@@ -11,12 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
-import {
   BookOpen,
   Calendar,
   Clock,
@@ -34,7 +28,6 @@ import { formatCourseDate } from '@/lib/utils';
 export default function CourseDetailPage() {
   const { courseId } = useParams();
   const {
-    isAuthenticated,
     enrolledCourses,
     enrollInCourse,
     getCourseProgress,

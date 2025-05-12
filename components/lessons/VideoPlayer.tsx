@@ -24,22 +24,12 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   const playerRef = useRef<HTMLDivElement>(null);
   const controlsTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  // If it's a YouTube embed URL, render the iframe
-  if (videoUrl.includes('youtube.com/embed')) {
-    return (
-      <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black">
-        <iframe
-          src={videoUrl}
-          className="absolute top-0 left-0 w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title="Embedded video"
-        ></iframe>
-      </div>
-    );
-  }
+  // Render YouTube iframe if the video URL is a YouTube embed
+  const isYouTubeEmbed = videoUrl.includes('youtube.com/embed');
 
   useEffect(() => {
+    if (isYouTubeEmbed) return; // Skip the effect for YouTube embeds
+
     const videoElement = videoRef.current;
 
     if (!videoElement) return;
@@ -65,9 +55,11 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
       videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
       videoElement.removeEventListener('ended', handleEnded);
     };
-  }, []);
+  }, [isYouTubeEmbed]);
 
   useEffect(() => {
+    if (isYouTubeEmbed) return; // Skip the effect for YouTube embeds
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -76,14 +68,16 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     } else {
       video.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, isYouTubeEmbed]);
 
   useEffect(() => {
+    if (isYouTubeEmbed) return; // Skip the effect for YouTube embeds
+
     const video = videoRef.current;
     if (!video) return;
 
     video.volume = isMuted ? 0 : volume;
-  }, [volume, isMuted]);
+  }, [volume, isMuted, isYouTubeEmbed]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -158,6 +152,20 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
+
+  if (isYouTubeEmbed) {
+    return (
+      <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black">
+        <iframe
+          src={videoUrl}
+          className="absolute top-0 left-0 w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="Embedded video"
+        ></iframe>
+      </div>
+    );
+  }
 
   return (
     <div
