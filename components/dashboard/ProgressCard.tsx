@@ -19,6 +19,7 @@ export function ProgressCard({ course, progress, lastLessonId }: ProgressCardPro
         <Image 
         width={1280} // Accurate width for the thumbnail
         height={720} 
+        
           src={course.thumbnail} 
           alt={course.title}
           className="object-cover w-full h-full"
@@ -31,6 +32,7 @@ export function ProgressCard({ course, progress, lastLessonId }: ProgressCardPro
             <Image 
             width={1280} // Accurate width for the thumbnail
             height={720} 
+            
               src={course.author.avatar} 
               alt={course.author.name}
               className="w-6 h-6 rounded-full"

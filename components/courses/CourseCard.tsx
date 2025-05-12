@@ -16,6 +16,8 @@ export function CourseCard({ course }: CourseCardProps) {
     course.categories.includes(category.id)
   );
 
+  
+
   return (
     <Link href={`/courses/${course.id}`} className="block group">
       <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-md flex flex-col">
@@ -23,7 +25,7 @@ export function CourseCard({ course }: CourseCardProps) {
           <Image 
             width={1260} // Add width
             height={750} // Add height
-            layout="responsive"
+            
             src={course.thumbnail} 
             alt={course.title}
             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
@@ -66,7 +68,7 @@ export function CourseCard({ course }: CourseCardProps) {
             <Image 
               width={48} // Add width
               height={48} // Add height
-              layout="responsive"
+              
               src={course.author.avatar} 
               alt={course.author.name}
               className="w-6 h-6 rounded-full"

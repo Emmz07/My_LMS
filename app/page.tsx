@@ -91,7 +91,7 @@ export default function Home() {
                 src="https://images.pexels.com/photos/4492126/pexels-photo-4492126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="Online learning"
                 className="rounded-xl shadow-xl w-full"
-                layout="responsive"
+              
                 width={1260}
                 height={750}
               />
@@ -308,7 +308,7 @@ export default function Home() {
                 src="https://images.pexels.com/photos/4145153/pexels-photo-4145153.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="Students learning"
                 className="rounded-lg shadow-xl"
-                layout="responsive"
+              
                 width={1260}
                 height={750}
               />

@@ -14,6 +14,7 @@ import {
   BookOpen,
   Calendar,
   Clock,
+  Layout,
   PlayCircle,
   Star,
   Users,
@@ -286,3 +287,5 @@ export default function CourseDetailPage() {
     </MainLayout>
   );
 }
+
+
