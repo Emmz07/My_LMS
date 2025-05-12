@@ -14,7 +14,6 @@ import {
   BookOpen,
   Calendar,
   Clock,
-  Layout,
   PlayCircle,
   Star,
   Users,
